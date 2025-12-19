@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Speech | Real-time Conversational AI</title>
+    <meta name="description"
+        content="Experience ultra-low latency speech-to-speech AI interaction. Talk naturally with our voice agent powered by Deepgram.">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="dark-mode">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    </svg>
+                </div>
+                <span>Speech to Speech</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#demo">Try Demo</a>
+                <button id="themeToggle" class="theme-btn" title="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <path
+                            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Powered by Deepgram</div>
+            <h1>Talk to AI.<br><span class="gradient-text">Naturally.</span></h1>
+            <p class="hero-description">Experience real-time speech-to-speech conversation with ultra-low latency. No
+                typing, no waiting—just speak.</p>
+            <div class="hero-buttons">
+                <a href="#demo" class="btn btn-primary">Try It Now</a>
+                <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">&lt;300ms</span>
+                    <span class="stat-label">Latency</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">99.9%</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">30+</span>
+                    <span class="stat-label">Voice Models</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>Why Speech to Speech?</h2>
+            <p>Built for developers who want the best voice AI experience.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Ultra-Low Latency</h3>
+                <p>Sub-300ms response times make conversations feel natural and fluid.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>High Accuracy STT</h3>
+                <p>Industry-leading speech recognition powered by Deepgram Nova-2.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗣️</div>
+                <h3>Natural TTS</h3>
+                <p>Choose from 30+ voice models with natural intonation and emotion.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Function Calling</h3>
+                <p>Extend capabilities with custom tools and API integrations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Enterprise-grade security with no data stored after processing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>WebSocket Streaming</h3>
+                <p>Real-time bidirectional audio streaming for instant responses.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Three simple steps to natural voice interaction.</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Speak</h3>
+                <p>Click the microphone and start talking. Your voice is captured and streamed in real-time.</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Process</h3>
+                <p>Deepgram transcribes your speech. An LLM generates an intelligent response.</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Listen</h3>
+                <p>The response is converted to speech and plays back instantly. Continue the conversation!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="section-header">
+            <h2>Try It Yourself</h2>
+            <p>Click the microphone below to start a conversation with our AI agent.</p>
+        </div>
+        <div class="demo-container">
+            <div class="demo-controls">
+                <select id="industrySelect" class="industry-select">
+                    <option value="deepgram">Deepgram Support</option>
+                </select>
+                <select id="voiceModel" class="voice-select"></select>
+                <select id="inputDevice" class="device-select"></select>
+                <div id="connectionStatus" class="status-dot disconnected" title="Disconnected"></div>
+            </div>
+
+            <!-- Custom System Prompt -->
+            <div class="prompt-container">
+                <div class="prompt-header">
+                    <label for="systemPrompt">🎭 Custom Role / Prompt</label>
+                    <button id="togglePrompt" class="toggle-btn">▼</button>
+                </div>
+                <div id="promptBox" class="prompt-box">
+                    <textarea id="systemPrompt" class="system-prompt"
+                        placeholder="Example: You are a friendly customer service agent for a coffee shop. Be helpful, warm, and recommend coffee based on customer preferences."></textarea>
+                    <p class="prompt-hint">Define how the AI agent should behave. Leave empty for default.</p>
+                </div>
+            </div>
+
+            <!-- Latency Display -->
+            <div id="latencyDisplay" class="latency-display hidden">
+                <span class="latency-item">STT: <span id="sttLatency">--</span>ms</span>
+                <span class="latency-divider">|</span>
+                <span class="latency-item">LLM: <span id="llmLatency">--</span>ms</span>
+                <span class="latency-divider">|</span>
+                <span class="latency-item">TTS: <span id="ttsLatency">--</span>ms</span>
+                <span class="latency-divider">|</span>
+                <span class="latency-item total">Total: <span id="totalLatency">--</span>ms</span>
+            </div>
+
+            <div class="visualizer-container">
+                <canvas id="audioVisualizer" class="audio-canvas"></canvas>
+                <div class="voice-visualizer" id="visualizer">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
+                    <button id="startButton" class="mic-button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="23" />
+                            <line x1="8" y1="23" x2="16" y2="23" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <p id="status" class="status-text">Click to start conversation</p>
+
+            <div class="conversation-box">
+                <div class="conversation-header">
+                    <h3>Conversation</h3>
+                    <div class="conversation-actions">
+                        <button id="exportJsonBtn" class="action-btn" title="Export as JSON">📥 JSON</button>
+                        <button id="exportTxtBtn" class="action-btn" title="Export as TXT">📄 TXT</button>
+                        <button id="clearBtn" class="clear-btn">Clear</button>
+                    </div>
+                </div>
+                <div id="conversationMessages" class="messages-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-icon small">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    </svg>
+                </div>
+                <span>Speech to Speech</span>
+            </div>
+            <p class="footer-text">Built with Deepgram Voice AI</p>
+        </div>
+    </footer>
+
+    <script>
+        const socket = io();
+        const startButton = document.getElementById('startButton');
+        const voiceModelSelect = document.getElementById('voiceModel');
+        const conversationMessages = document.getElementById('conversationMessages');
+        const statusDiv = document.getElementById('status');
+        const inputSelect = document.getElementById('inputDevice');
+        const visualizer = document.getElementById('visualizer');
+        const themeToggle = document.getElementById('themeToggle');
+        const clearBtn = document.getElementById('clearBtn');
+        const industrySelect = document.getElementById('industrySelect');
+        const exportJsonBtn = document.getElementById('exportJsonBtn');
+        const exportTxtBtn = document.getElementById('exportTxtBtn');
+        const latencyDisplay = document.getElementById('latencyDisplay');
+        const audioCanvas = document.getElementById('audioVisualizer');
+        const systemPromptInput = document.getElementById('systemPrompt');
+        const togglePromptBtn = document.getElementById('togglePrompt');
+        const promptBox = document.getElementById('promptBox');
+
+        let isActive = false;
+        let currentVoiceModel = 'aura-2-thalia-en';
+        let currentVoiceName = '';
+        let currentIndustry = 'deepgram';
+        let conversationHistory = [];
+        let analyser, canvasCtx, animationId;
+
+        // Load saved system prompt
+        const savedPrompt = localStorage.getItem('systemPrompt');
+        if (savedPrompt) {
+            systemPromptInput.value = savedPrompt;
+        }
+
+        // Toggle prompt box visibility
+        togglePromptBtn.addEventListener('click', () => {
+            promptBox.classList.toggle('collapsed');
+            togglePromptBtn.textContent = promptBox.classList.contains('collapsed') ? '▶' : '▼';
+        });
+
+        // Save prompt to localStorage on change
+        systemPromptInput.addEventListener('input', () => {
+            localStorage.setItem('systemPrompt', systemPromptInput.value);
+        });
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        if (localStorage.getItem('darkMode') === 'false') {
+            document.body.classList.remove('dark-mode');
+        }
+
+        // Clear conversation
+        clearBtn.addEventListener('click', () => {
+            conversationMessages.innerHTML = '';
+            conversationHistory = [];
+        });
+
+        // Export Conversation - JSON
+        exportJsonBtn.addEventListener('click', () => {
+            if (conversationHistory.length === 0) {
+                alert('No conversation to export');
+                return;
+            }
+            const data = JSON.stringify(conversationHistory, null, 2);
+            downloadFile(data, 'conversation.json', 'application/json');
+        });
+
+        // Export Conversation - TXT
+        exportTxtBtn.addEventListener('click', () => {
+            if (conversationHistory.length === 0) {
+                alert('No conversation to export');
+                return;
+            }
+            const lines = conversationHistory.map(m => `[${m.timestamp}] ${m.role.toUpperCase()}: ${m.content}`);
+            const data = lines.join('\n\n');
+            downloadFile(data, 'conversation.txt', 'text/plain');
+        });
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Load Industries
+        function loadIndustries() {
+            fetch('/industries')
+                .then(response => response.json())
+                .then(industries => {
+                    industrySelect.innerHTML = '';
+                    Object.entries(industries).forEach(([key, name]) => {
+                        const option = document.createElement('option');
+                        option.value = key;
+                        option.text = name;
+                        industrySelect.appendChild(option);
+                    });
+                })
+                .catch(err => console.error('Error loading industries:', err));
+        }
+        loadIndustries();
+
+        industrySelect.addEventListener('change', function () {
+            currentIndustry = this.value;
+        });
+
+        // Update latency display
+        function updateLatency(stt, llm, tts) {
+            document.getElementById('sttLatency').textContent = stt || '--';
+            document.getElementById('llmLatency').textContent = llm || '--';
+            document.getElementById('ttsLatency').textContent = tts || '--';
+            const total = (stt || 0) + (llm || 0) + (tts || 0);
+            document.getElementById('totalLatency').textContent = total || '--';
+            latencyDisplay.classList.remove('hidden');
+        }
+
+        // Socket event for latency updates
+        socket.on('latency_update', (data) => {
+            updateLatency(data.stt, data.llm, data.tts);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Load audio devices
+        async function loadAudioDevices() {
+            try {
+                inputSelect.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = "default";
+                defaultOption.text = "Default Microphone";
+                inputSelect.appendChild(defaultOption);
+
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const audioInputDevices = devices.filter(device => device.kind === 'audioinput');
+
+                audioInputDevices.forEach((device, index) => {
+                    if (device.label) {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        option.text = device.label || `Microphone ${index + 1}`;
+                        inputSelect.appendChild(option);
+                    }
+                });
+
+                if (audioInputDevices.filter(d => d.label).length === 0) {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    stream.getTracks().forEach(track => track.stop());
+                    return loadAudioDevices();
+                }
+            } catch (err) {
+                console.error('Error loading audio devices:', err);
+            }
+        }
+
+        navigator.mediaDevices.addEventListener('devicechange', loadAudioDevices);
+        loadAudioDevices();
+
+        // Load TTS models
+        function loadTTSModels() {
+            fetch('/tts-models')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) return;
+                    voiceModelSelect.innerHTML = '';
+                    data.models.forEach(model => {
+                        if (!model.name) return;
+                        const option = document.createElement('option');
+                        option.value = model.name;
+                        let displayName = model.display_name || model.name;
+                        option.text = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+                        option.dataset.voiceName = option.text;
+                        voiceModelSelect.appendChild(option);
+                    });
+                    if (voiceModelSelect.options.length > 0) {
+                        currentVoiceModel = voiceModelSelect.options[0].value;
+                        currentVoiceName = voiceModelSelect.options[0].dataset.voiceName;
+                    }
+                })
+                .catch(error => console.error('Error fetching TTS models:', error));
+        }
+        loadTTSModels();
+
+        voiceModelSelect.addEventListener('change', function () {
+            currentVoiceModel = this.value;
+            currentVoiceName = this.options[this.selectedIndex].dataset.voiceName;
+        });
+
+        // Connection Status Helper
+        function updateConnectionStatus(status) {
+            const statusDot = document.getElementById('connectionStatus');
+            if (statusDot) {
+                statusDot.className = `status-dot ${status}`;
+                statusDot.title = status.charAt(0).toUpperCase() + status.slice(1);
+            }
+        }
+
+        // Start/Stop Voice Agent
+        startButton.addEventListener('click', async () => {
+            if (!isActive) {
+                try {
+                    statusDiv.textContent = 'Initializing...';
+                    updateConnectionStatus('connecting');
+
+                    const hasPermission = await requestMicrophonePermission();
+                    if (!hasPermission) {
+                        statusDiv.textContent = 'Microphone permission denied';
+                        updateConnectionStatus('disconnected');
+                        return;
+                    }
+
+                    const captureStarted = await startAudioCapture();
+                    if (!captureStarted) {
+                        statusDiv.textContent = 'Failed to start audio';
+                        updateConnectionStatus('disconnected');
+                        return;
+                    }
+
+                    socket.emit('start_voice_agent', {
+                        inputDeviceId: inputSelect.value,
+                        industry: currentIndustry,
+                        voiceModel: currentVoiceModel,
+                        voiceName: currentVoiceName,
+                        browserAudio: true,
+                        systemPrompt: systemPromptInput.value.trim() || null
+                    });
+
+                    visualizer.classList.add('active');
+                    statusDiv.textContent = 'Listening...';
+                    updateConnectionStatus('connected');
+                    isActive = true;
+                    startAudioVisualizer();
+                } catch (err) {
+                    statusDiv.textContent = 'Error: ' + err.message;
+                    updateConnectionStatus('error');
+                    stopAudioCapture();
+                }
+            } else {
+                socket.emit('stop_voice_agent');
+                stopAudioCapture();
+                visualizer.classList.remove('active');
+                visualizer.classList.remove('thinking');
+                statusDiv.textContent = 'Click to start conversation';
+                updateConnectionStatus('disconnected');
+                isActive = false;
+            }
+        });
+
+        // Audio processing
+        let audioContext, mediaStream, processor, microphone;
+
+        async function requestMicrophonePermission() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                stream.getTracks().forEach(track => track.stop());
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        async function startAudioCapture() {
+            try {
+                const deviceId = inputSelect.value;
+                const audioConstraints = { echoCancellation: true, noiseSuppression: true };
+                if (deviceId && deviceId !== 'default') {
+                    audioConstraints.deviceId = { exact: deviceId };
+                }
+
+                mediaStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                microphone = audioContext.createMediaStreamSource(mediaStream);
+                processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+                microphone.connect(processor);
+                processor.connect(audioContext.destination);
+
+                processor.onaudioprocess = function (e) {
+                    if (!isActive) return;
+                    const inputData = e.inputBuffer.getChannelData(0);
+                    const pcmData = new Int16Array(inputData.length);
+                    for (let i = 0; i < inputData.length; i++) {
+                        pcmData[i] = Math.max(-32768, Math.min(32767, Math.floor(inputData[i] * 32767)));
+                    }
+                    socket.emit('audio_data', { audio: pcmData, sampleRate: audioContext.sampleRate });
+                };
+
+                return true;
+            } catch (err) {
+                console.error('Error starting audio capture:', err);
+                return false;
+            }
+        }
+
+        function stopAudioCapture() {
+            if (processor) { processor.disconnect(); processor = null; }
+            if (microphone) { microphone.disconnect(); microphone = null; }
+            if (mediaStream) { mediaStream.getTracks().forEach(track => track.stop()); mediaStream = null; }
+            if (audioContext && audioContext.state !== 'closed') { audioContext.close(); audioContext = null; }
+            stopAudioOutput();
+        }
+
+        // Conversation display
+        function addMessage(role, content) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transform = 'translateY(20px)';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.innerHTML = role === 'user' ?
+                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>' :
+                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = content;
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(bubble);
+            conversationMessages.appendChild(messageDiv);
+
+            requestAnimationFrame(() => {
+                messageDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                messageDiv.style.opacity = '1';
+                messageDiv.style.transform = 'translateY(0)';
+                conversationMessages.scrollTo({
+                    top: conversationMessages.scrollHeight,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Handle thinking state
+            if (role === 'user') {
+                visualizer.classList.add('thinking');
+                statusDiv.textContent = 'Thinking...';
+            } else {
+                visualizer.classList.remove('thinking');
+                statusDiv.textContent = 'Listening...';
+            }
+        }
+
+        socket.on('conversation_update', (data) => {
+            addMessage(data.role, data.content);
+            // Track conversation history for export
+            conversationHistory.push({
+                role: data.role,
+                content: data.content,
+                timestamp: new Date().toISOString()
+            });
+        });
+
+        socket.on('disconnect', () => {
+            isActive = false;
+            visualizer.classList.remove('active');
+            statusDiv.textContent = 'Disconnected';
+            updateConnectionStatus('disconnected');
+            stopAudioVisualizer();
+        });
+
+        // Error handling
+        socket.on('error', (data) => {
+            console.error('Server error:', data);
+            statusDiv.textContent = 'Error: ' + (data.message || 'Connection failed');
+            updateConnectionStatus('error');
+        });
+
+        socket.on('deepgram_error', (data) => {
+            console.error('Deepgram error:', data);
+            statusDiv.textContent = 'Deepgram: ' + (data.message || 'Service unavailable');
+            updateConnectionStatus('error');
+        });
+
+        // Audio output
+        let audioOutputContext = null;
+        let nextPlayTime = 0;
+        let audioOutputSampleRate = 16000;
+
+        function playAudioOutput(audioData, sampleRate) {
+            try {
+                if (!audioOutputContext) {
+                    audioOutputContext = new (window.AudioContext || window.webkitAudioContext)();
+                    nextPlayTime = audioOutputContext.currentTime;
+                }
+                if (sampleRate) audioOutputSampleRate = sampleRate;
+
+                const pcmData = new Int16Array(audioData);
+                const floatData = new Float32Array(pcmData.length);
+                for (let i = 0; i < pcmData.length; i++) {
+                    floatData[i] = pcmData[i] / 32768.0;
+                }
+
+                const audioBuffer = audioOutputContext.createBuffer(1, floatData.length, audioOutputSampleRate);
+                audioBuffer.getChannelData(0).set(floatData);
+
+                const source = audioOutputContext.createBufferSource();
+                source.buffer = audioBuffer;
+                const gainNode = audioOutputContext.createGain();
+                gainNode.gain.value = 1.0;
+                source.connect(gainNode);
+                gainNode.connect(audioOutputContext.destination);
+
+                const currentTime = audioOutputContext.currentTime;
+                if (nextPlayTime <= currentTime + 0.03) {
+                    nextPlayTime = currentTime + 0.03;
+                }
+                source.start(nextPlayTime);
+                nextPlayTime += audioBuffer.duration;
+            } catch (err) {
+                console.error('Error playing audio:', err);
+            }
+        }
+
+        function stopAudioOutput() {
+            nextPlayTime = 0;
+            if (audioOutputContext && audioOutputContext.state !== 'closed') {
+                audioOutputContext.close();
+                audioOutputContext = null;
+            }
+        }
+
+        socket.on('audio_output', (data) => {
+            if (data.audio) {
+                playAudioOutput(data.audio, data.sampleRate);
+            }
+        });
+
+        // Audio Visualizer
+        function startAudioVisualizer() {
+            if (!audioContext || !microphone) return;
+
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            microphone.connect(analyser);
+
+            const canvas = audioCanvas;
+            canvasCtx = canvas.getContext('2d');
+            canvas.width = 200;
+            canvas.height = 200;
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                if (!isActive) return;
+                animationId = requestAnimationFrame(draw);
+
+                analyser.getByteFrequencyData(dataArray);
+
+                canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = 60;
+
+                // Draw circular bars
+                const barCount = 32;
+                for (let i = 0; i < barCount; i++) {
+                    const dataIndex = Math.floor(i * bufferLength / barCount);
+                    const barHeight = (dataArray[dataIndex] / 255) * 40;
+                    const angle = (i / barCount) * Math.PI * 2 - Math.PI / 2;
+
+                    const x1 = centerX + Math.cos(angle) * radius;
+                    const y1 = centerY + Math.sin(angle) * radius;
+                    const x2 = centerX + Math.cos(angle) * (radius + barHeight);
+                    const y2 = centerY + Math.sin(angle) * (radius + barHeight);
+
+                    canvasCtx.beginPath();
+                    canvasCtx.moveTo(x1, y1);
+                    canvasCtx.lineTo(x2, y2);
+                    canvasCtx.strokeStyle = `rgba(37, 99, 235, ${0.3 + barHeight / 60})`;
+                    canvasCtx.lineWidth = 3;
+                    canvasCtx.lineCap = 'round';
+                    canvasCtx.stroke();
+                }
+            }
+
+            draw();
+        }
+
+        function stopAudioVisualizer() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            if (canvasCtx) {
+                canvasCtx.clearRect(0, 0, audioCanvas.width, audioCanvas.height);
+            }
+        }
+    </script>
+</body>
+
+</html>
