@@ -1,0 +1,2 @@
+Type,Name,# requests,# failures,Median (ms),Average (ms),Min (ms),Max (ms),Average size (bytes),Requests/s
+WebSocket,/ws/voice,5000,10,320,350,150,890,1024,16.67
