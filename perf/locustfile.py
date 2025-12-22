@@ -1,3 +1,8 @@
+"""
+Locust load test for Voice Agent WebSocket
+Tests sub-500ms latency at 500+ concurrent connections
+"""
+
 from locust import HttpUser, task, between, WebSocketUser
 import json
 import time
@@ -40,3 +45,7 @@ class VoiceAgentUser(WebSocketUser):
                 "/ws/voice", 
                 str(e)
             )
+
+if __name__ == "__main__":
+    # Run: locust -f locustfile.py --headless -u 500 -r 50 -t 300s
+    pass

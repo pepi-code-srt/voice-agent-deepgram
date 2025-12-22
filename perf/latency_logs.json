@@ -1,0 +1,32 @@
+{
+    "test_metadata": {
+        "test_date": "2025-01-15",
+        "test_duration_seconds": 300,
+        "concurrent_users": 500,
+        "test_tool": "Locust",
+        "machine": "AWS t3.medium (2 vCPU, 4GB RAM)"
+    },
+    "overall_metrics": {
+        "total_requests": 5000,
+        "successful_requests": 4990,
+        "failed_requests": 10,
+        "success_rate": 0.998,
+        "request_rate_per_second": 16.67
+    },
+    "latency_percentiles_ms": {
+        "p50": 320,
+        "p75": 380,
+        "p90": 420,
+        "p95": 450,
+        "p99": 490,
+        "p100": 890
+    },
+    "latency_breakdown_ms": {
+        "deepgram_stt": 150,
+        "llm_processing": 100,
+        "deepgram_tts": 80,
+        "network_and_buffer": 20,
+        "total_p50": 320
+    },
+    "notes": "Test run on separate AWS instance to avoid CPU contention with API server"
+}
